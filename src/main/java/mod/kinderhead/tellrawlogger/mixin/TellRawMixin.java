@@ -7,8 +7,10 @@ import com.mojang.brigadier.CommandDispatcher;
 
 import mod.kinderhead.tellrawlogger.TellrawLogger;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.command.DefaultPermissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.TextArgumentType;
+import net.minecraft.command.permission.PermissionCheck;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.command.TellRawCommand;
@@ -20,7 +22,7 @@ public class TellRawMixin {
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess registryAccess) {
 		dispatcher.register(
 			CommandManager.literal("tellraw")
-				.requires(CommandManager.requirePermissionLevel(2))
+				.requires(CommandManager.requirePermissionLevel(CommandManager.ADMINS_CHECK))
 				.then(
 					CommandManager.argument("targets", EntityArgumentType.players())
 						.then(CommandManager.argument("message", TextArgumentType.text(registryAccess)).executes(context -> {
